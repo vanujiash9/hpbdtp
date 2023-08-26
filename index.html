@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happy Birthday Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: pink;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .heart-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .heart {
+            width: 200px;
+            height: 180px;
+            position: relative; 
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 160px;
+            border-radius: 100px 100px 0 0;
+            background: linear-gradient(-45deg, #ff6b6b, transparent);
+            animation: sparkle 1s infinite;
+        }
+        .heart::before {
+            left: 100px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .cake-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .cake {
+            width: 150px;
+            height: 200px;
+            background-color: #f39c12;
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .candle {
+            width: 10px;
+            height: 40px;
+            background-color: #e74c3c;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        .video-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .video {
+            width: 300px;
+            height: 200px;
+        }
+        .heart.clicked + .message,
+        .heart.clicked + .cake-container,
+        .heart.clicked + .video-container {
+            display: block;
+        }
+        .heart.clicked::before,
+        .heart.clicked::after {
+            display: none;
+        }
+        .small-heart {
+            position: absolute;
+            width: 20px;
+            height: 18px;
+            animation: sparkle 1s infinite;
+        }
+        .small-heart::before,
+        .small-heart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 16px;
+            border-radius: 10px 10px 0 0;
+            background: linear-gradient(-45deg, #ff6b6b, transparent);
+        }
+        .small-heart::before {
+            left: 10px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .small-heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        .hidden-image {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: auto;
+        }
+        .hidden-image {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: auto;
+            
+        }
+        .hidden-image img {
+            max-width: 150%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            margin-left: -82px;
+        }
+        .falling-hearts {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .falling-heart {
+            position: absolute;
+            width: 20px;
+            height: 18px;
+            animation: heart 2s linear infinite;
+            pointer-events: none;
+            background: linear-gradient(-45deg, #ff6b6b, transparent);
+            transform-origin: center bottom;
+        }
+        .falling-heart::before,
+        .falling-heart::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 16px;
+            border-radius: 10px 10px 0 0;
+            background: linear-gradient(-45deg, #ff6b6b, transparent);
+        }
+        .falling-heart::before {
+            left: 10px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        .falling-heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        .running-images {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .running-image {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url(tải\ xuống\ \(1\).jpg);
+            background-size: cover;
+            animation: run 7s linear infinite}
+        @keyframes run {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(1500%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-container">
+        <div class="heart"><h3 style="color: blue; margin-top: 230px;">Nhấn vào đây</h3></div>
+        <!-- Hình trái tim nhỏ -->
+        <div class="small-heart"></div>
+        <div class="small-heart" style="top: 20px; left: 40px;"></div>
+        <div class="small-heart" style="top: -30px; left: 80px;"></div>
+        <div class="small-heart" style="top: 50px; left: 120px;"></div>
+        <div class="small-heart" style="top: 20px; right: 40px;"></div>
+        <div class="small-heart" style="top: -30px; right: 80px;"></div>
+        <div class="small-heart" style="top: 50px; right: 120px;"></div>
+        <!-- Thêm nhiều hình trái tim nhỏ xung quanh nền -->
+        
+        <!-- Hình trái tim rơi -->
+        <div class="running-images">
+            <div class="running-image"></div>
+           
+           
+            
+            <!-- ... (Thêm các hình ảnh khác) ... -->
+        </div>
+        <div class="falling-hearts">
+           
+            <div class="falling-heart" style="left: 40px;"></div>
+            <div class="falling-heart" style="left: 80px;"></div>
+            <div class="falling-heart" style="left: 120px;"></div>
+            <div class="falling-heart" style="left: 160px;"></div>
+            <div class="falling-heart" style="left: 200px;"></div>
+            <div class="falling-heart" style="left: 240px;"></div>
+            <div class="falling-heart" style="right: 40px;"></div>
+            <div class="falling-heart" style="right: 80px;"></div>
+            <div class="falling-heart" style="right: 120px;"></div>
+            <div class="falling-heart" style="right: 160px;"></div>
+            <div class="falling-heart" style="right: 200px;"></div>
+            <div class="falling-heart" style="right: 240px;"></div>
+        </div>
+    </div>
+    <div class="message">
+        Chúc mừng sinh nhật ta daaaaa! 🎉
+        <!-- Trích dẫn ảnh bóng bay -->
+        <img src="z4629748264313_a26419f932d73bba0e326102a25cee56.jpg" alt="Birthday Balloon" class="cake-image">
+        Nhấn vào bánh sinh nhật để biết thêm...
+        <!-- Trích dẫn ảnh ẩn -->
+        <div class="hidden-image">
+            <img src="Soft Neutral New Post Instagram Story .png" alt="hidden-image">
+        </div>
+    </div>
+    <div class="cake-container">
+ 
+    </div>
+    <div class="video-container">
+        <iframe class="video" width="300" height="200" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <audio id="birthdayAudio" src="Untitled video - Made with Clipchamp (2).mp4" preload="auto"></audio>
+
+    <script>
+        const heart = document.querySelector('.heart');
+        const cakeContainer = document.querySelector('.cake-container');
+        const videoContainer = document.querySelector('.video-container');
+        const hiddenImage = document.querySelector('.hidden-image');
+        const cakeImage = document.querySelector('.cake-image');
+        
+        cakeImage.addEventListener('click', () => {
+            hiddenImage.style.display = 'block';
+        });
+        
+        const message = document.querySelector('.message');
+        const birthdayAudio = document.getElementById('birthdayAudio');
+
+        heart.addEventListener('click', () => {
+            heart.classList.add('clicked');
+            cakeContainer.classList.add('clicked');
+            videoContainer.classList.add('clicked');
+            message.style.display = 'block';
+            
+            // Play audio
+            birthdayAudio.play().then(() => {
+                // Audio started playing
+            }).catch(error => {
+                // Handle audio playback error
+                console.error('Audio playback error:', error);
+            });
+
+            // Autoplay video
+            const videoIframe = document.querySelector('.video');
+            videoIframe.src += "?autoplay=1";
+        });
+    </script>
+</body>
+</html>
+
