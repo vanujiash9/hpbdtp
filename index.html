@@ -240,6 +240,63 @@
                 transform: translateX(1500%);
             }
         }
+          .candle {
+        width: 10px;
+        height: 40px;
+        background-color: #e74c3c;
+        border-radius: 5px;
+        margin: 0 5px;
+    }
+
+    /* Kiểu dáng ngọn lửa trên nến */
+    .candle::before,
+    .candle::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 20px;
+        background: linear-gradient(-45deg, #ff6b6b, transparent);
+        border-radius: 5px;
+        bottom: 40px;
+    }
+
+    .candle::before {
+        left: 0;
+        transform: rotate(-45deg);
+        transform-origin: 100% 100%;
+    }
+
+    .candle::after {
+        right: 0;
+        transform: rotate(45deg);
+        transform-origin: 0 100%;
+    }
+    /* CSS hiện có */
+
+/* Thêm đoạn mã sau để tạo bố cục cho phần điều ước */
+#wishInput {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+#submitWishButton {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Kết thúc đoạn mã mới */
+
     </style>
 </head>
 <body>
@@ -280,6 +337,8 @@
         </div>
     </div>
     <div class="message">
+       
+
         Chúc mừng sinh nhật ta daaaaa! 🎉
         <!-- Trích dẫn ảnh bóng bay -->
         <img src="z4629748264313_a26419f932d73bba0e326102a25cee56.jpg" alt="Birthday Balloon" class="cake-image">
@@ -288,6 +347,8 @@
         <div class="hidden-image">
             <img src="Soft Neutral New Post Instagram Story .png" alt="hidden-image">
         </div>
+        <textarea id="wishInput" placeholder="Nhập điều ước của bạn"></textarea>
+    <button id="submitWishButton">Gửi điều ước</button>
     </div>
     <div class="cake-container">
  
@@ -330,6 +391,18 @@
             const videoIframe = document.querySelector('.video');
             videoIframe.src += "?autoplay=1";
         });
+        const submitWishButton = document.getElementById('submitWishButton');
+const wishInput = document.getElementById('wishInput');
+
+submitWishButton.addEventListener('click', () => {
+    const wish = wishInput.value;
+    if (wish.trim() !== '') {
+        alert(`Điều ước của bạn là: ${wish}`);
+    } else {
+        alert('Vui lòng nhập điều ước của bạn.');
+    }
+});
+
     </script>
 </body>
 </html>
